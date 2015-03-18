@@ -1,5 +1,5 @@
-winsible - a faster Ansible (especially on Cygwin!)
-===================================================
+winsible - a faster Ansible (especially on Cygwin)
+==================================================
 
 winsible is an experimental wrapper for `ansible-playbook` that enhances its multiprocessing and connection persistence, for platforms where OpenSSH can't transparently do its own connection pooling (such as EL5 and Cygwin).
 
@@ -11,7 +11,7 @@ Installation and Use
 
 Install winsible with `pip install winsible` or `easy_install winsible`.  If you don't have these commands on your system, try installing your platform's `python-setuptools` package.  (Also, if you're not on Cygwin, you'll need to be root or use sudo, or install them to a virtualenv.)
 
-If you have a current version of `gevent` on your system (1.0.1 or better), winsible can use it to eliminate forking altogether and run plays against all hosts with a single process.  But this is a relatively small performance boost compared to connection pooling (and is somewhat experimental), so it's optional and has to be explicitly activated.  If you want to try it, you can install gevent with `sudo pip install "gevent>=1.0.1"` or `sudo easy_install "gevent>=1.0.1"`.  (Then enable it with `ANSIBLE_PROCESS_MODE=gevent` in the environment or `process_mode=gevent` in your ansible.cfg.) 
+If you have a current version of `gevent` on your system (1.0.1 or better), winsible can use it to eliminate forking altogether and run plays against all hosts with a single process.  But this is a relatively small performance boost compared to connection pooling (and is somewhat experimental), so it's optional and has to be explicitly activated.  If you want to try it, you can install gevent with `sudo pip install "gevent>=1.0.1"` or `sudo easy_install "gevent>=1.0.1"`.  (Then enable it with `ANSIBLE_PROCESS_MODE=gevent` in the environment or `process_mode=gevent` in your ansible.cfg's `[defaults]` section.) 
 
 Last, but not least, make sure you've got an `ssh` command: if you're on Cygwin, install the `openssh` package, or on Linux distros it might be in an `openssh-clients` package.
 
@@ -25,7 +25,7 @@ How It Works
 
 ### Processing Modes
 
-The `winsible` and `winsible-playbook` scripts invoke ansible with a preselected "processing mode", which can be one of `fork`, `gevent`, `pool`, or `smart`.  This mode can be configured using the `process_mode` variable in the `defaults` section of `ansible.cfg`, or via the  `ANSIBLE_PROCESS_MODE` environment variable.  (The default mode is `smart`, which will use `pool` if running a playbook, and `fork` otherwise.)
+The `winsible` and `winsible-playbook` scripts invoke ansible with a preselected "processing mode", which can be one of `fork`, `gevent`, `pool`, or `smart`.  This mode can be configured using the `process_mode` variable in the `[defaults]` section of your ansible.cfg, or via the  `ANSIBLE_PROCESS_MODE` environment variable.  (The default mode is `smart`, which will use `pool` if running a playbook, and `fork` otherwise.)
   
 The `fork` mode is Ansible's standard way of multiprocessing, which opens connections in separate processes.  This works fine if you're running a single task or have a `ControlPersist`-capable ssh, but is terribly inefficient otherwise.  
 
