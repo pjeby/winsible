@@ -10,7 +10,6 @@ EXE_PATH = os.path.dirname(
     os.path.realpath(__file__ if __file__.endswith('.py') else __file__[:-1])
 )
 
-import atexit
 conn_cache = {}
 
 def reap(proc):
@@ -38,6 +37,7 @@ def shout(cmd):
 
 def cygpath(path):
     return shout(['cygpath','-wa',path])[:-1]
+
 
 fingerprints = {}
 
@@ -85,7 +85,6 @@ class Connection(SSHBase):
     def __init__(self, *args, **kwargs):
         SSHBase.__init__(self, *args, **kwargs)
         self.port = (C.DEFAULT_REMOTE_PORT or 22) if self.port is None else self.port
-        self._server_process = None
 
     def connect(self):
         # This really just sets up options, it doesn't really connect anything
@@ -118,6 +117,7 @@ class Connection(SSHBase):
 
     def not_in_host_file(self, host):
         return not get_fingerprint(host, self.port)
+
 
 
 
