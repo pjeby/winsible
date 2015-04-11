@@ -4,11 +4,12 @@ setup(
     name='winsible',
     version='0.1.0',
     packages=['winsible'],
-    description = "A faster `ansible` For The (cyg)Win (and other platforms)",
+    description = "A Faster Ansible (especially on Cygwin)",
     author="PJ Eby",
     author_email="peak@eby-sarna.com",
     license="MIT",
-    long_description = open('README.md').read().split('How It Works')[0] +
+    long_description = open('README.md').read().split('How It Works')[0]
+        .replace('`', '``') +
         "For more information on how this works and how to configure it, "
         "check out the docs at https://github.com/pjeby/winsible/.\n"
     ,
